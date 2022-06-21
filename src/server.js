@@ -9,7 +9,7 @@ import cors from 'cors';
 import { errorHandlerMiddleware } from "./api/helpers/CustomError.js";
 import { customErrorMiddleware } from "./api/middlewares/customErrorMiddleware.js";
 import Routes from "./api/routes/index.js";
-// import mongo from "./api/modules/mongodb.js";
+import mongodb from "./api/modules/mongodb.js";
 
 //configure dotenv 
 DotEnv.config();
@@ -24,14 +24,14 @@ const PORT = process.env.PORT || 6690;
 async function server() {
     try {
         //connect to mongodb
-        // const db = await mongo();
+        const db = await mongodb()
 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
         }
         );
         app.use(cors())
-        app.use(Express.json());
+        app.use(Express.json())
         app.use(Express.urlencoded({ extended: true }));
 
 
@@ -40,11 +40,11 @@ async function server() {
         app.use(morgan('dev'));
 
 
-        //use db as a request property
-        // app.use((req, res, next) => {
-        //     req.db = db
-        //     next();
-        // });
+        // use db as a request property
+        app.use((req, res, next) => {
+            req.db = db
+            next();
+        });
 
         //use custom error handler
         app.use(customErrorMiddleware);
