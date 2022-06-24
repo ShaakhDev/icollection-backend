@@ -22,16 +22,17 @@ export default async function UsersModel(Mongoose) {
         },
         register_date: {
             type: Date,
-
-
         },
         last_login: {
             type: Date,
         },
+        role: {
+            type: String,
+            required: true,
+        },
         status: {
             type: String,
             required: true,
-
         }
     });
 

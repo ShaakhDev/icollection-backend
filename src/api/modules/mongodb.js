@@ -2,6 +2,7 @@ import Mongoose from "mongoose";
 import DotEnv from 'dotenv'
 import UsersModel from '../models/UsersModel.js'
 import CollectionsModel from '../models/CollectionsModel.js'
+import ItemsModel from "../models/ItemsModel.js";
 
 DotEnv.config()
 
@@ -20,7 +21,8 @@ export default async function mongodb() {
         //create database object
         let db = {}
         db.users = await UsersModel(Mongoose)
-        db.collections = await CollectionsModel(Mongoose)
+        db.collections = await CollectionsModel(Mongoose);
+        db.items = await ItemsModel(Mongoose);
         return db;
     } catch (error) {
         console.log(error);

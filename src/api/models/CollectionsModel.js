@@ -1,31 +1,31 @@
 export default async function CollectionsModel(Mongoose) {
     const collectionSchema = new Mongoose.Schema({
-        collection_name: {
+        name: {
             type: String,
             required: true,
         },
-        collection_description: {
+        description: {
             type: String,
             required: true,
         },
-        collection_image: {
+        image_url: {
             type: String,
             required: true,
         },
-        collection_id: {
+        id: {
             type: String,
             required: true,
             unique: true,
         },
-        collection_date: {
+        date: {
             type: Date,
             required: true,
         },
-        collection_topic: {
+        topic: {
             type: String,
             required: true,
         },
-        collection_user_id: {
+        user_id: {
             type: String,
             required: true,
         }
