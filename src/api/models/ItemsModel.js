@@ -15,7 +15,7 @@ export default async function ItemsModel(Mongoose) {
         },
         date: {
             type: Date,
-            default: new Date.now()
+
         },
         collection_id: {
             type: String,
@@ -28,4 +28,6 @@ export default async function ItemsModel(Mongoose) {
         }
 
     })
+
+    return Mongoose.model("items", itemSchema);
 }

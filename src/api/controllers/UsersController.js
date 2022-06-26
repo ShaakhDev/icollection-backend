@@ -3,7 +3,7 @@ import { signJwtToken } from "../modules/jwt.js";
 import { uid } from "../modules/GenerateId.js";
 import { createNewHash, compareHash } from "../modules/bcrypt.js";
 import { AuthChecker } from "../helpers/AuthChecker.js";
-
+import { ROLES } from "../constants/UserRoles.js";
 
 export default class UsersController {
     static async UserCreateAccount(req, res, next) {
@@ -42,6 +42,7 @@ export default class UsersController {
                 user_password: password,
                 register_date: Date.now(),
                 last_login: null,
+                role: ROLES.BASIC,
                 status: "active"
             });
             newUser.user_password = null;
