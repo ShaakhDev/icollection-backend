@@ -101,7 +101,7 @@ export default class UsersController {
                 status: 200,
                 message: "User logged in successfully!",
                 data: {
-                    token,
+                    access_token,
                     user
                 }
             });
