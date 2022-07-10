@@ -88,7 +88,7 @@ export default class UsersController {
                 throw new res.error(400, "Password is incorrect!");
 
             // Create token
-            const token = signJwtToken(user.id);
+            const access_token = signJwtToken(user.id);
 
             // Update last login
             user.last_login = Date.now();
