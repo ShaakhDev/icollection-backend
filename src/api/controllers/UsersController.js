@@ -159,6 +159,12 @@ export default class UsersController {
                 throw new res.error(403, "User is blocked!");
             }
 
+            const collections = await req.db.collections.find({
+                user_id: req.body.id
+            });
+
+            user.collections = collections;
+
             res.json({
                 ok: true,
                 message: "User profile!",
