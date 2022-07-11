@@ -144,4 +144,28 @@ export default class UsersController {
             next(e)
         }
     }
+
+    static async GetUserProfile(req, res, next) {
+        try {
+            const { status, message } = await AuthChecker(req);
+
+            if (status !== 200) throw new res.error(status, message);
+
+            const user = await req.db.users.findOne({
+                id: req.body.id
+            });
+
+            if (user.status === "blocked") {
+                throw new res.error(403, "User is blocked!");
+            }
+
+            res.json({
+                ok: true,
+                message: "User profile!",
+                data: user
+            });
+        } catch (e) {
+            next(e)
+        }
+    }
 }
