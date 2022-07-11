@@ -150,12 +150,11 @@ export default class UsersController {
             const { status, message } = await AuthChecker(req);
 
             if (status !== 200) throw new res.error(status, message);
-
-            const user = await req.db.users.findOne({
+            const userObj = await req.db.users.findOne({
                 id: req.body.id
             });
 
-            if (user.status === "blocked") {
+            if (userObj.status === "blocked") {
                 throw new res.error(403, "User is blocked!");
             }
 
@@ -163,8 +162,17 @@ export default class UsersController {
                 user_id: req.body.id
             });
 
-            user.collections = collections;
+            const user = {
+                id: userObj.id,
+                user_name: userObj.user_name,
+                user_email: userObj.user_email,
+                register_date: userObj.register_date,
+                last_login: userObj.last_login,
+                role: userObj.role,
+                status: userObj.status,
+                collections
 
+            }
             res.json({
                 ok: true,
                 message: "User profile!",
