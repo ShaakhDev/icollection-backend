@@ -78,6 +78,12 @@ export default class UsersController {
             if (user.status === 'blocked') {
                 throw new res.error(403, "User is blocked!");
             }
+
+            //check user's email
+            if (user.user_email !== req.body.user_email) {
+                throw new res.error(400, "User's email is not verified!");
+            }
+
             // Check password
             const isPasswordCorrect = await compareHash(
                 req.body.user_password,
@@ -86,6 +92,7 @@ export default class UsersController {
 
             if (!isPasswordCorrect)
                 throw new res.error(400, "Password is incorrect!");
+
 
             // Create token
             const access_token = signJwtToken(user.id);
