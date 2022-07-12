@@ -147,9 +147,10 @@ export default class UsersController {
 
     static async GetUserProfile(req, res, next) {
         try {
-            // const { status, message } = await AuthChecker(req);
+            console.log(req.body)
+            const { status, message } = await AuthChecker(req);
 
-            // if (status !== 200) throw new res.error(status, message);
+            if (status !== 200) throw new res.error(status, message);
             const userObj = await req.db.users.findOne({
                 id: req.body.id
             });

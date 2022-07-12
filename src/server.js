@@ -4,7 +4,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import DotEnv from 'dotenv';
 import cors from 'cors';
-
+import fileUpload from 'express-fileupload';
+import { v2 as cloudinary } from 'cloudinary';
 
 import { errorHandlerMiddleware } from "./api/helpers/CustomError.js";
 import { customErrorMiddleware } from "./api/middlewares/customErrorMiddleware.js";
@@ -16,6 +17,7 @@ DotEnv.config();
 
 
 const app = Express();
+
 
 //import PORT from .env
 const PORT = process.env.PORT || 6690;
@@ -31,8 +33,11 @@ async function server() {
         }
         );
         app.use(cors())
+
         app.use(Express.json())
         app.use(Express.urlencoded({ extended: true }));
+        app.use(fileUpload({ useTempFiles: true }));
+
 
 
         //setup security 

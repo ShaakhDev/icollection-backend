@@ -21,6 +21,10 @@ export default async function CollectionsModel(Mongoose) {
             type: Date,
             required: true,
         },
+        updated_at: {
+            type: Date,
+            required: true,
+        },
         topic: {
             type: String,
             required: true,
