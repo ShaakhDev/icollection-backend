@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import DotEnv from 'dotenv';
 import cors from 'cors';
 import fileUpload from 'express-fileupload';
-import { v2 as cloudinary } from 'cloudinary';
 
 import { errorHandlerMiddleware } from "./api/helpers/CustomError.js";
 import { customErrorMiddleware } from "./api/middlewares/customErrorMiddleware.js";
@@ -35,7 +34,7 @@ async function server() {
         app.use(cors())
 
         app.use(Express.json())
-        app.use(Express.urlencoded({ extended: true }));
+        app.use(Express.urlencoded({ extended: false }));
         app.use(fileUpload({ useTempFiles: true }));
 
 

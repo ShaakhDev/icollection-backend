@@ -23,6 +23,7 @@ export default async function mongodb() {
         db.users = await UsersModel(Mongoose)
         db.collections = await CollectionsModel(Mongoose);
         db.items = await ItemsModel(Mongoose);
+        console.log("Models created");
         return db;
     } catch (error) {
         console.log(error);

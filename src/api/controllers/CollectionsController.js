@@ -2,15 +2,28 @@ import { AuthChecker } from "../helpers/AuthChecker.js";
 import { v2 as cloudinary } from "cloudinary";
 import { uid } from "../modules/GenerateId.js";
 
-
 export default class CollectionsController {
-    // static async GetCollectionById(req, res, next) {
-    //     try {
+    static async GetCollectionById(req, res, next) {
+        try {
+            console.log(req.body)
+            const collection = await req.db.collections.findOne({
+                collection_id: req.body.collection_id
+            })
+            console.log(collection)
+            if (collection === null) {
+                throw new res.error(404, "Collection not found!");
+            }
 
-    //     } catch (error) {
-
-    //     }
-    // }
+            res.json({
+                ok: true,
+                status: 200,
+                message: "Collection found!",
+                data: collection
+            });
+        } catch (error) {
+            next();
+        }
+    }
 
 
     static async CreateCollection(req, res, next) {
@@ -38,27 +51,29 @@ export default class CollectionsController {
                 folder: 'collections',
             });
 
-
+            const { name, description, topic, user_id } = req.body;
+            console.log(name, description, topic, user_id)
             const collection = await req.db.collections.create({
-                user_id: req.body.user_id,
-                name: req.body.name,
-                description: req.body.description,
+                name,
+                description,
+                topic,
+                author_id: user_id,
+                author_name: user.user_name,
                 image_url: result.secure_url,
-                date: Date.now(),
-                updated_at: Date.now(),
-                id: uid(5),
-                topic: req.body.topic
+                collection_id: uid(10),
+                date: new Date(),
+                updated_at: new Date(),
+                items: [],
             })
-            console.log(collection);
 
 
 
             res.json({
+                data: collection,
                 ok: true,
+                status: 200,
                 message: "Collection created successfully!",
-                data: collection
             });
-
         } catch (error) {
             next();
         }
@@ -80,13 +95,24 @@ export default class CollectionsController {
     //     }
     // }
 
-    // static async GetMostPopularCollections(req, res, next) {
-    //     try {
+    static async GetMostPopularCollections(req, res, next) {
+        try {
+            const collection = await req.db.collections.find({
+                $sort: {
+                    items: 1
+                }
+            })
 
-    //     } catch (error) {
-
-    //     }
-    // }
+            res.json({
+                ok: true,
+                status: 200,
+                message: "Collections found!",
+                data: collection
+            });
+        } catch (error) {
+            next();
+        }
+    }
 
     // static async GetAllCollections(req, res, next) {
     //     try {

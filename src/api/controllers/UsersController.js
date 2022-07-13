@@ -45,6 +45,7 @@ export default class UsersController {
                 role: ROLES.BASIC,
                 status: "active"
             });
+
             newUser.user_password = null;
 
             // Send response to user
@@ -147,7 +148,6 @@ export default class UsersController {
 
     static async GetUserProfile(req, res, next) {
         try {
-            console.log(req.body)
             const { status, message } = await AuthChecker(req);
 
             if (status !== 200) throw new res.error(status, message);
