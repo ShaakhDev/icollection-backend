@@ -1,3 +1,4 @@
+
 export default async function ItemsModel(Mongoose) {
     const itemSchema = new Mongoose.Schema({
         item_id: {
@@ -5,7 +6,7 @@ export default async function ItemsModel(Mongoose) {
             required: true,
             unique: true,
         },
-        tags: [{ type: String, required: true }],
+        tags: [String],
         likes: [{ type: String }],
         name: {
             type: String,
@@ -21,12 +22,12 @@ export default async function ItemsModel(Mongoose) {
         collection_id: {
             type: String,
             required: true,
-            unique: true
+
         },
-        user_id: {
-            type: String,
-            required: true
-        },
+        // user_id: {
+        //     type: String,
+        //     required: true
+        // },
         author: {
 
             type: String,

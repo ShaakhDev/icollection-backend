@@ -5,20 +5,29 @@ import { uid } from "../modules/GenerateId.js";
 export default class CollectionsController {
     static async GetCollectionById(req, res, next) {
         try {
-            console.log(req.body)
             const collection = await req.db.collections.findOne({
                 collection_id: req.body.collection_id
             })
-            console.log(collection)
             if (collection === null) {
                 throw new res.error(404, "Collection not found!");
+            }
+
+            const items = await req.db.items.find({
+                collection_id: req.body.collection_id
+            })
+
+            if (items === null) {
+                collection.items = []
             }
 
             res.json({
                 ok: true,
                 status: 200,
                 message: "Collection found!",
-                data: collection
+                data: {
+                    collection,
+                    items
+                }
             });
         } catch (error) {
             next();
@@ -40,6 +49,8 @@ export default class CollectionsController {
             if (user.status === "blocked") {
                 throw new res.error(403, "User is blocked!");
             }
+
+
             cloudinary.config({
                 cloud_name: process.env.CLOUD_NAME,
                 api_key: process.env.CLOUD_KEY,
